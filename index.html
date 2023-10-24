@@ -1,0 +1,102 @@
+<!-- Only intended for testing -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image to Anime Converter</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #image-upload {
+            display: none;
+        }
+
+        #image-preview {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        #converted-image {
+            display: none;
+        }
+
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image to Anime Converter</h1>
+
+    <form id="image-form" enctype="multipart/form-data" method="post" action="http://localhost:5000/convert-to-anime">
+        <input type="file" name="image" id="image-upload" accept="image/*">
+        <label for="image-upload" id="image-label">Choose an image</label>
+        <br>
+        <img id="image-preview" src="#" alt="Image Preview">
+        <br>
+        <input type="submit" value="Convert to Anime">
+    </form>
+
+    <div id="loading">
+        <p>Converting image... Please wait.</p>
+    </div>
+
+    <div id="converted-image">
+        <h2>Converted Image</h2>
+        <img id="result-image" src="#" alt="Converted Image">
+    </div>
+
+    <script>
+        const imageForm = document.getElementById('image-form');
+        const imageUpload = document.getElementById('image-upload');
+        const imageLabel = document.getElementById('image-label');
+        const imagePreview = document.getElementById('image-preview');
+        const loading = document.getElementById('loading');
+        const convertedImage = document.getElementById('converted-image');
+        const resultImage = document.getElementById('result-image');
+
+        imageUpload.addEventListener('change', function () {
+            const file = imageUpload.files[0];
+            if (file) {
+                imageLabel.innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imageLabel.innerText = 'Choose an image';
+                imagePreview.src = '#';
+            }
+        });
+
+        imageForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            loading.style.display = 'block';
+            convertedImage.style.display = 'none';
+            resultImage.src = '';
+
+            const formData = new FormData(imageForm);
+
+            fetch("http://localhost:5000/convert-to-anime", {
+                method: "POST",
+                body: formData,
+            })
+                .then(response => response.blob())
+                .then(data => {
+                    const blobUrl = URL.createObjectURL(data);
+                    resultImage.src = blobUrl;
+                    loading.style.display = 'none';
+                    convertedImage.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    loading.style.display = 'none';
+                });
+        });
+    </script>
+</body>
+</html>
