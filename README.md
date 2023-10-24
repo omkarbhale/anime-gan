@@ -17,9 +17,13 @@ pip install -r requirements.txt     <- Install requirements
 ```
 python server.py
 ```
-5. To test the functionality, you may use index,html
+5. To test the functionality, you may use index.html
+- Open index.html using any live server
+- Upload an image and click "Convert to Anime"
 
 ## Did i make it?
-This converter is based on the original [Hugging Face web demo](https://huggingface.co/spaces/akhaliq/AnimeGANv2), created by [@ak92501](https://twitter.com/ak92501/) using the AI model created by [@bryandlee](https://github.com/bryandlee/animegan2-pytorch), which uses training techniques developed by [Xin Chen](https://github.com/TachibanaYoshino/AnimeGANv2). I created this site so that users can convert their image to an anime/cartoon style without uploading their images to a server - it's completely free. The conversion process is done in your browser (using your device's CPU/GPU) so your images remain private.
+This converter is based on the original [Hugging Face web demo](https://huggingface.co/spaces/akhaliq/AnimeGANv2), created by [@ak92501](https://twitter.com/ak92501/) using the AI model created by [@bryandlee](https://github.com/bryandlee/animegan2-pytorch), which uses training techniques developed by [Xin Chen](https://github.com/TachibanaYoshino/AnimeGANv2).
+
+I created this site so that users can convert their image to an anime/cartoon style without uploading their images to a server - it's completely free. The conversion process is done in your browser (using your device's CPU/GPU) so your images remain private.
 
 Have fun! :)
